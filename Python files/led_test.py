@@ -7,7 +7,7 @@ import board
 import adafruit_dotstar as dotstar
 
 # On-board DotStar for boards including Gemma, Trinket, and ItsyBitsy
-dots = dotstar.DotStar(board.SCK, board.MOSI, 240, brightness=0, auto_write=False)
+dots = dotstar.DotStar(board.SCK, board.MOSI, 240, brightness=0.3, auto_write=False)
 
 # Using a DotStar Digital LED Strip with 30 LEDs connected to hardware SPI
 # dots = dotstar.DotStar(board.SCK, board.MOSI, 30, brightness=0.2)
