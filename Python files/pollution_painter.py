@@ -9,6 +9,9 @@ from collections import deque
 import numpy as np
 import threading
 
+#led_writer dependencies
+from .led_writer import led_writer
+
 user = os.getuid()
 if user != 0:
     print("Please run script as root")
@@ -47,13 +50,10 @@ class pm_sensor(object):
     
     def stop_continuous_sampling(self) -> None:
         self.cont_sample_flag = False
-    
-    
 
 
-class led_writer():
-    writing = False
-    
+leds = led_writer()
+
 
 def button(channel):
     print("button pressed")
