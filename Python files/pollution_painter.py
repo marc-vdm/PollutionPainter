@@ -8,6 +8,12 @@ if user != 0:
 	print("Please run script as root")
 	sys.exit()
 	
+class pm_sensor():
+	pm25 = 1
+
+class led_writer():
+	writing = False
+	
 
 def button(channel):
 	print("button pressed")
