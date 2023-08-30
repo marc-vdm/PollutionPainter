@@ -3,6 +3,9 @@ import sys
 import threading
 import RPi.GPIO as GPIO
 
+#led_writer dependencies
+from .led_writer import led_writer
+
 user = os.getuid()
 if user != 0:
 	print("Please run script as root")
@@ -11,8 +14,8 @@ if user != 0:
 class pm_sensor():
 	pm25 = 1
 
-class led_writer():
-	writing = False
+leds = led_writer()
+		
 	
 
 def button(channel):
