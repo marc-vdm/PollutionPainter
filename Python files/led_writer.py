@@ -14,7 +14,7 @@ y_points = np.linspace(0, 0.863, num=2, endpoint=False)
 class led_writer():
     running = False
 
-    def __init__(self, n_dots = 240):
+    def __init__(self, n_dots = 240) -> None:
         self.n_dots = n_dots
 
         if 'PM25' not in globals():
@@ -23,15 +23,15 @@ class led_writer():
         self.dots = dotstar.DotStar(board.SCK, board.MOSI, n_dots, auto_write=False)
         print("init led writer")
         
-    def start(self):
+    def start(self) -> None:
         self.running = True
         self.loop()
 
-    def stop(self):
+    def stop(self) -> None:
         self.running = False
         threading.Timer(0.1, self.clear_leds).start()
     
-    def loop(self):
+    def loop(self) -> None:
         #Start next loop in 0.1 seconds
         if(self.running):
             threading.Timer(0.1, self.loop).start()
@@ -43,7 +43,7 @@ class led_writer():
         self.set_leds(prob)
 
     
-    def set_leds(self, p):
+    def set_leds(self, p) -> None:
         #Create a list of n_dots size with random True False values
         rand_list = np.random.choice([False, True], size=(self.n_dots,), p=[1-p, p])
 
@@ -54,7 +54,7 @@ class led_writer():
                 self.dots[i] = (0, 0, 0)
         self.dots.show()
     
-    def clear_leds(self):
+    def clear_leds(self) -> None:
         for i in range(self.n_dots):
             self.dots[i] = (0, 0, 0)
         self.dots.show()
