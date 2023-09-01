@@ -6,7 +6,7 @@ import numpy as np
 import threading
 
 PM25 = 5        #simulated PM25 value
-n_dots = 240    #number of dots in a strip
+n_dots = 240    #number of dots on a strip
 
 x_points = np.linspace(0,550, num=2, endpoint=False)
 y_points = np.linspace(0, 0.863, num=2, endpoint=False)
@@ -16,6 +16,9 @@ class led_writer():
 
     def __init__(self, n_dots = 240):
         self.n_dots = n_dots
+
+        if 'PM25' not in globals():
+            raise Exception("No global PM25 variable found during led_writer initialization")
 
         self.dots = dotstar.DotStar(board.SCK, board.MOSI, n_dots, auto_write=False)
         print("init led writer")
@@ -35,7 +38,6 @@ class led_writer():
 
         #calculate cutoff and p from PM25 value
         prob=np.interp(PM25, x_points, y_points)
-        print(prob)
 
         #Set leds with new probability
         self.set_leds(prob)
@@ -69,5 +71,4 @@ if __name__ == '__main__':
         main()
 
     except KeyboardInterrupt:
-        #GPIO.cleanup()
         print("Keyboard interrupt")
