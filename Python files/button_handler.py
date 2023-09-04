@@ -76,22 +76,22 @@ class button_handler():
 
     def __longpress_method(self) -> None:
         if self.longpress_callback != None:
-            self.longpress_callback.__func__()
+            self.longpress_callback()
         pass
 
     def __button_down_method(self) -> None:
         if self.button_down_callback != None:
-            self.button_down_callback.__func__()
+            self.button_down_callback()
         pass
 
     def __button_up_method(self) -> None:
         if self.button_up_callback != None:
-            self.button_up_callback.__func__()
+            self.button_up_callback()
         pass
 
     def __double_press_method(self) -> None:
         if self.double_press_callback != None:
-            self.double_press_callback.__func__()
+            self.double_press_callback()
         pass
 
 
