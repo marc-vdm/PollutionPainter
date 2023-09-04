@@ -3,6 +3,8 @@ import board
 import digitalio
 import threading
 
+from collections.abc import Callable
+
 
 
 class button_handler():
@@ -10,32 +12,32 @@ class button_handler():
     pressed_time = time.time()
     released_time = time.time()
 
-    press_callback: function | None = None
-    longpress_callback: function | None = None
-    button_down_callback: function | None = None
-    button_up_callback: function | None = None
-    double_press_callback: function | None = None
+    press_callback: Callable[[],None] | None = None
+    longpress_callback: Callable[[],None] | None = None
+    button_down_callback: Callable[[],None] | None = None
+    button_up_callback: Callable[[],None] | None = None
+    double_press_callback: Callable[[],None] | None = None
 
     def __init__(self) -> None:
         self.button.direction = digitalio.Direction.INPUT
         self.button.pull = digitalio.Pull.UP
 
-        threading.Thread(target=self.released).start()
+        threading.Thread(target=self.__released).start()
 
-    def released(self) -> None:
+    def __released(self) -> None:
         #Callback function for button coming up
-        self.button_up_method()
+        self.__button_up_method()
 
         #Loop that breaks when button is pressed
         while self.button.value:
             continue
         
         #return to pressed loop
-        self.pressed()
+        self.__pressed()
     
-    def pressed(self) -> None:
+    def __pressed(self) -> None:
         #Callback function for button coming down
-        self.button_down_method()
+        self.__button_down_method()
 
         #Recording time between last release and this press for 
         #possible double-press
@@ -53,41 +55,41 @@ class button_handler():
 
         #If the press-duration is longer than 1s callback
         if delta_pressed_time > 1:
-            self.longpress_method()
+            self.__longpress_method()
         #If the time between presses is shorter than 0.5s callback
         elif delta_released_time < 0.3:
             self.press_timer.cancel() #Cancel the normal press
-            self.double_press_method()
+            self.__double_press_method()
         #If not start a threading Timer for a normal press, that can
         #be canceled in case of a double press
         else:
-            self.press_timer = threading.Timer(0.4, self.press_method)
+            self.press_timer = threading.Timer(0.4, self.__press_method)
             self.press_timer.start()
 
         #return to released loop
-        self.released()
+        self.__released()
     
-    def press_method(self) -> None:
+    def __press_method(self) -> None:
         if self.press_callback != None:
-            self.press_callback.__func__()
+            self.press_callback()
         pass
 
-    def longpress_method(self) -> None:
+    def __longpress_method(self) -> None:
         if self.longpress_callback != None:
             self.longpress_callback.__func__()
         pass
 
-    def button_down_method(self) -> None:
+    def __button_down_method(self) -> None:
         if self.button_down_callback != None:
             self.button_down_callback.__func__()
         pass
 
-    def button_up_method(self) -> None:
+    def __button_up_method(self) -> None:
         if self.button_up_callback != None:
             self.button_up_callback.__func__()
         pass
 
-    def double_press_method(self) -> None:
+    def __double_press_method(self) -> None:
         if self.double_press_callback != None:
             self.double_press_callback.__func__()
         pass
