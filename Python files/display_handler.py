@@ -29,7 +29,7 @@ class Display_Handler(handler.Handler):
         draw = ImageDraw.Draw(image)
 
         font = ImageFont.load_default()
-        text = f"PM25: {self.PM25.variable}\n{self.STATUS.variable}"
+        text = f"{self.STATUS.variable}\nPM25: {self.PM25.variable}\nMode: {self.MODE.variable}"
         draw.text((0.0,0.0),text,font=font, fill=255, spacing=0)
 
         self.oled.image(image)
@@ -58,14 +58,8 @@ class Display_Handler(handler.Handler):
         #self.mode = mode
         self.refresh()
 
-
-
-
 def main():
     Display_Handler()
-
-    
-    
 
 if __name__ == '__main__':
     try:

@@ -2,12 +2,18 @@ import os
 import RPi.GPIO as GPIO
 
 #self-build dependencies
+import handler
 import led_handler
 import sensor_handler
 import button_handler
 import display_handler
 
+def console_status(status):
+    print(f"Status Change: {status}")
+
 #Initiating the handlers
+context = handler.Handler()
+context.STATUS.hook(console_status)
 display = display_handler.Display_Handler()
 sensor = sensor_handler.Sensor_Handler()
 leds = led_handler.Led_Handler()
@@ -16,8 +22,9 @@ button = button_handler.button_handler()
 def main():
     button.press_callback = button_push
     button.longpress_callback = button_longpress
-    display.STATUS.change("Ready")
+    context.STATUS.change("Ready")
     
+
 
 #Callback function for a single button push
 #In this case darken the display and activity led
