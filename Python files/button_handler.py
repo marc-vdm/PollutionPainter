@@ -57,7 +57,7 @@ class button_handler():
         if delta_pressed_time > 1:
             self.__longpress_method()
         #If the time between presses is shorter than 0.5s callback
-        elif delta_released_time < 0.3:
+        elif delta_released_time < 0.2:
             self.press_timer.cancel() #Cancel the normal press
             self.__double_press_method()
         #If not start a threading Timer for a normal press, that can
@@ -96,12 +96,28 @@ class button_handler():
 
 
 def main():
-    button_handler()
+    button = button_handler()
 
-    button_handler.press_callback = callback
+    button.press_callback = press_callback
+    button.longpress_callback = longpress_callback
+    button.double_press_callback = double_press_callback
+    #button.button_up_callback = button_up_callback
+    #button.button_down_callback = button_down_callback
 
-def callback():
+def press_callback():
     print("press callback")
+
+def longpress_callback():
+    print("longpress callback")
+
+def double_press_callback():
+    print("doublepress callback")
+
+def button_up_callback():
+    print("button up callback")
+
+def button_down_callback():
+    print("button down callback")
 
 if __name__ == '__main__':
     try:

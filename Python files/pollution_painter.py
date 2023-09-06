@@ -9,7 +9,7 @@ import button_handler
 import display_handler
 
 import modes.default
-import modes.default_two
+import modes.faster
 
 def console_status(status):
     print(f"Status Change: {status}")
@@ -65,7 +65,7 @@ def pi_led_on():
 #In this case darken the display and activity led
 #Or vice versa
 
-modes = [modes.default.mode, modes.default_two.mode]
+modes = [modes.default.mode, modes.faster.mode]
 mode_iterator = 0
 
 def button_doublepress():

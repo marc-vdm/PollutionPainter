@@ -2,7 +2,7 @@ from . import led_mode
 import numpy as np
 
 x_points = np.linspace(0,550, num=2, endpoint=False)
-y_points = np.linspace(0, 0.863, num=2, endpoint=False)
+y_points = np.linspace(0, 0.431, num=2, endpoint=False)
 
 def led_function(Led_Handler):
         p=np.interp(Led_Handler.PM25.variable, x_points, y_points)
@@ -16,7 +16,7 @@ def led_function(Led_Handler):
         Led_Handler.dots.show()
 
 mode = led_mode.Led_Mode(
-    name="default two",
-    pace=1,
+    name="faster",
+    pace=0.05,
     led_function = led_function
 )
