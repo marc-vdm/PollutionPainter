@@ -8,6 +8,9 @@ import sensor_handler
 import button_handler
 import display_handler
 
+import modes.default
+import modes.default_two
+
 def console_status(status):
     print(f"Status Change: {status}")
 
@@ -22,6 +25,7 @@ button = button_handler.button_handler()
 def main():
     button.press_callback = button_push
     button.longpress_callback = button_longpress
+    button.double_press_callback = button_doublepress
     context.STATUS.change("Ready")
     
 
@@ -56,6 +60,19 @@ def pi_led_off():
 
 def pi_led_on():
     os.system('echo 1 | sudo tee /sys/class/leds/led0/brightness > /dev/null')
+
+#Callback function for a longpress
+#In this case darken the display and activity led
+#Or vice versa
+
+modes = [modes.default.mode, modes.default_two.mode]
+mode_iterator = 0
+
+def button_doublepress():
+    global mode_iterator
+    mode_iterator = mode_iterator + 1
+    if mode_iterator == len(modes): mode_iterator = 0
+    leds.change_mode(modes[mode_iterator])
 
 if __name__ == '__main__':
     try:
