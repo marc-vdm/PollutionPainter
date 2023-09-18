@@ -10,8 +10,8 @@ import handlers.button_handler
 import handlers.display_handler
 import handlers.http_handler
 
-import modes.default
-import modes.faster
+import handlers.modes.default
+import handlers.modes.faster
 
 def console_status(status):
     print(f"Status Change: {status}")
@@ -25,12 +25,12 @@ leds = handlers.led_handler.Led_Handler()
 button = handlers.button_handler.button_handler()
 
 def main():
-    #threading.Thread(target=handlers.http_handler.start_server).start()
+    threading.Thread(target=handlers.http_handler.start_server).start()
+    threading.Thread(target=display.loop).start()
     button.press_callback = button_push
     button.longpress_callback = button_longpress
     button.double_press_callback = button_doublepress
     context.STATUS.change("Ready")
-    
 
 
 #Callback function for a single button push
@@ -68,7 +68,7 @@ def pi_led_on():
 #In this case darken the display and activity led
 #Or vice versa
 
-modes = [modes.default.mode, modes.faster.mode]
+modes = [handlers.modes.default.mode, handlers.modes.faster.mode]
 mode_iterator = 0
 
 def button_doublepress():

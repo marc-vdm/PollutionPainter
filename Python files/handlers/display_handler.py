@@ -4,7 +4,7 @@ import adafruit_ssd1306
 from PIL import Image, ImageDraw, ImageFont
 import state
 from . import handler
-
+import time
 
 
 class Display_Handler(handler.Handler):
@@ -19,9 +19,17 @@ class Display_Handler(handler.Handler):
         self.oled.show()
 
         #hooking into states
+        """
         self.PM25.hook(self.set_PM25)
         self.STATUS.hook(self.set_status)
         self.MODE.hook(self.set_mode)
+        """
+
+    def loop(self) -> None:
+        self.looping = True
+        while(self.looping):
+            self.refresh()
+            time.sleep(1)
     
     def refresh(self) -> None:
         if self.darkened: return

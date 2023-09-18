@@ -1,6 +1,7 @@
 from . import handler
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+import threading
 
 class HttpRequestHandler(BaseHTTPRequestHandler, handler.Handler):
 
@@ -16,7 +17,7 @@ class HttpRequestHandler(BaseHTTPRequestHandler, handler.Handler):
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
-            print("Data request")
+            #print("Data request")
             response = {'pm25': self.PM25.variable, 'status':self.STATUS.variable}
             self.wfile.write(json.dumps(response).encode())
 
@@ -31,3 +32,10 @@ def start_server():
     httpd = HTTPServer(server_address, HttpRequestHandler)
     print('Running HTTP server on port 80...')
     httpd.serve_forever()
+
+if __name__ == '__main__':
+    try:
+        threading.Thread(target=start_server).start()
+
+    except KeyboardInterrupt:
+        print("Keyboard interrupt")

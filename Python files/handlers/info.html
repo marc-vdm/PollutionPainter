@@ -22,20 +22,16 @@
             </tr>
         </table>
         <script>
-            function refresh(){
-                fetch('http://192.168.12.1/data')
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    document.getElementById("pm25").innerHTML = data.pm25;
-                    document.getElementById("status").innerHTML = data.status;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Handle any errors that occurred during the request
-                });
+            async function refresh(){
+                let response = await fetch('/data')
+                let data = response.json()
+                console.log(data)
+                document.getElementById("pm25").innerHTML = data.pm25;
+                document.getElementById("status").innerHTML = data.status;
+                setTimeout(refresh, 1000)
             }
-            let refresh_timer = setInterval(refresh, 500)
+            //let refresh_timer = setInterval(refresh, 500)
+            refresh()
 
 
         </script>
