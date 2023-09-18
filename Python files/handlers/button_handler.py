@@ -80,11 +80,13 @@ class button_handler():
         pass
 
     def __button_down_method(self) -> None:
+        print("button-down")
         if self.button_down_callback != None:
             self.button_down_callback()
         pass
 
     def __button_up_method(self) -> None:
+        print("button-up")
         if self.button_up_callback != None:
             self.button_up_callback()
         pass

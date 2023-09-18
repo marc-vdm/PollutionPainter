@@ -4,8 +4,7 @@ import serial
 from sds011lib import SDS011QueryReader
 import numpy as np
 import threading
-import state
-import handler
+from . import handler
 
 class Sensor_Handler(handler.Handler):
     def __init__(self) -> None:

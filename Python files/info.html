@@ -1,0 +1,43 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>
+                    PM25
+                </th>
+                <td id="pm25">
+                    <i>Loading...</i>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    Status
+                </th>
+                <td id="status">
+                    <i>Loading...</i>
+                </td>
+            </tr>
+        </table>
+        <script>
+            function refresh(){
+                fetch('http://192.168.12.1/data')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    document.getElementById("pm25").innerHTML = data.pm25;
+                    document.getElementById("status").innerHTML = data.status;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle any errors that occurred during the request
+                });
+            }
+            let refresh_timer = setInterval(refresh, 500)
+
+
+        </script>
+    </body>
+</html>

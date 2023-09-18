@@ -1,12 +1,14 @@
 import os
 import RPi.GPIO as GPIO
+import threading
 
 #self-build dependencies
-import handler
-import led_handler
-import sensor_handler
-import button_handler
-import display_handler
+import handlers.handler
+import handlers.led_handler
+import handlers.sensor_handler
+import handlers.button_handler
+import handlers.display_handler
+import handlers.http_handler
 
 import modes.default
 import modes.faster
@@ -15,14 +17,15 @@ def console_status(status):
     print(f"Status Change: {status}")
 
 #Initiating the handlers
-context = handler.Handler()
+context = handlers.handler.Handler()
 context.STATUS.hook(console_status)
-display = display_handler.Display_Handler()
-sensor = sensor_handler.Sensor_Handler()
-leds = led_handler.Led_Handler()
-button = button_handler.button_handler()
+display = handlers.display_handler.Display_Handler()
+sensor = handlers.sensor_handler.Sensor_Handler()
+leds = handlers.led_handler.Led_Handler()
+button = handlers.button_handler.button_handler()
 
 def main():
+    #threading.Thread(target=handlers.http_handler.start_server).start()
     button.press_callback = button_push
     button.longpress_callback = button_longpress
     button.double_press_callback = button_doublepress

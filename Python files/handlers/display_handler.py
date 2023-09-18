@@ -3,7 +3,7 @@ import busio
 import adafruit_ssd1306
 from PIL import Image, ImageDraw, ImageFont
 import state
-import handler
+from . import handler
 
 
 
