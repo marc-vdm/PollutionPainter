@@ -19,7 +19,6 @@ button = button_handler.button_handler()
 
 def main():
     threading.Thread(target=http_handler.start_server).start()
-    threading.Thread(target=display.loop).start()
     button.press_callback = button_push
     button.longpress_callback = button_longpress
     button.double_press_callback = button_doublepress

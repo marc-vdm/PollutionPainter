@@ -4,6 +4,7 @@ import adafruit_ssd1306
 from PIL import Image, ImageDraw, ImageFont
 from . import handler
 import time
+import threading
 
 
 class Display_Handler(handler.Handler):
@@ -16,6 +17,8 @@ class Display_Handler(handler.Handler):
         self.oled = adafruit_ssd1306.SSD1306_I2C(128, 32, i2c)
         self.oled.fill(0)
         self.oled.show()
+
+        threading.Thread(target=self.loop).start()
 
         #hooking into states
         """
