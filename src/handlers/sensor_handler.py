@@ -4,12 +4,16 @@ import serial
 from sds011lib import SDS011QueryReader
 import numpy as np
 import threading
-from . import handler
+from ..misc import State
 
-class Sensor_Handler(handler.Handler):
-    def __init__(self) -> None:
-        self.STATUS.change("Starting Sensor")
+class Sensor_Handler:
+    status = State("")
+    pm25 = State("")
+
+    def __init__(self, status) -> None:
+        self.status = status
         self.startup_sensor()
+
         self.buff = deque(np.zeros(5, dtype='f'), 5)
         self.tbuff = deque(np.zeros(5, dtype='f'), 5)
         time.sleep(1)
@@ -23,7 +27,7 @@ class Sensor_Handler(handler.Handler):
             self.port = serial.Serial("/dev/ttyAMA0", baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=0)
         except Exception as e:
             errorstring = "Startup Error: {}".format(e)
-            self.STATUS.change(errorstring)
+            self.status.change(errorstring)
         
     def sample(self) -> float:
         return self.sensor.query().pm25
@@ -32,7 +36,7 @@ class Sensor_Handler(handler.Handler):
         if self.cont_sample_flag:
             threading.Timer(1.01, self.continuous_sampling).start()
             PM25 = self.sample()
-            self.PM25.change(PM25)
+            self.pm25.change(PM25)
             self.buff.append(PM25)
             self.tbuff.append(time.time())
     
@@ -43,10 +47,8 @@ class Sensor_Handler(handler.Handler):
     def stop_continuous_sampling(self) -> None:
         self.cont_sample_flag = False
 
-
-
 def main():
-    sensor = Sensor_Handler()
+    sensor = Sensor_Handler(State("Testing"))
     time.sleep(10)
     #print(PM25)
     sensor.stop_continuous_sampling()

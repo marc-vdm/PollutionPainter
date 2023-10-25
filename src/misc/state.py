@@ -1,6 +1,6 @@
 from typing import Any, Callable
 
-class state():
+class State():
     
     def __init__(self, variable: Any) -> None:
         self.hook_list = []

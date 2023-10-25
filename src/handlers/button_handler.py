@@ -7,7 +7,7 @@ from collections.abc import Callable
 
 
 
-class button_handler():
+class Button_Handler():
     button = digitalio.DigitalInOut(board.D9)
     pressed_time = time.time()
     released_time = time.time()
@@ -98,7 +98,7 @@ class button_handler():
 
 
 def main():
-    button = button_handler()
+    button = Button_Handler()
 
     button.press_callback = press_callback
     button.longpress_callback = longpress_callback

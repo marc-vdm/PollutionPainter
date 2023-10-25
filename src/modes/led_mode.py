@@ -6,16 +6,16 @@ class Led_Mode():
         self.pace = pace
         self.led_function = led_function
     
-    def __loop(self, Led_Handler):
-        self.timer = threading.Timer(self.pace, self.__loop, [Led_Handler])
+    def __loop(self, Led_Handler, Sensor_Handler):
+        self.timer = threading.Timer(self.pace, self.__loop, [Led_Handler, Sensor_Handler])
         self.timer.start()
-        self.led_function(Led_Handler)
+        self.led_function(Led_Handler, Sensor_Handler)
     
     def __clear(self, Led_Handler):
         Led_Handler.clear_leds()
 
-    def start(self, Led_Handler):
-        self.__loop(Led_Handler)
+    def start(self, Led_Handler, Sensor_Handler):
+        self.__loop(Led_Handler, Sensor_Handler)
 
     def stop(self):
         try:
