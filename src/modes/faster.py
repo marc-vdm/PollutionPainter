@@ -5,7 +5,7 @@ x_points = np.linspace(0,550, num=2, endpoint=False)
 y_points = np.linspace(0, 0.431, num=2, endpoint=False)
 
 def led_function(Led_Handler, Sensor_Handler):
-        p=np.interp(Sensor_Handler.pm25, x_points, y_points)
+        p=np.interp(Sensor_Handler.pm25.variable, x_points, y_points)
         rand_list = np.random.choice([False, True], size=(Led_Handler.n_dots,), p=[1-p, p])
 
         for i in range(Led_Handler.n_dots):
