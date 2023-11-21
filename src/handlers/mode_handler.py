@@ -1,5 +1,5 @@
-from ..misc import State, pi_led
-from ..modes import default
+from misc import State, pi_led
+from modes import default
 
 import os
 

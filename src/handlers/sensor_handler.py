@@ -4,7 +4,7 @@ import serial
 from sds011lib import SDS011QueryReader
 import numpy as np
 import threading
-from ..misc import State
+from misc import State
 
 class Sensor_Handler:
     status = State("")

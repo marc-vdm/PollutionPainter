@@ -2,7 +2,7 @@ import board
 import busio
 import adafruit_ssd1306
 from PIL import Image, ImageDraw, ImageFont
-from ..misc import State
+from misc import State
 import time
 import threading
 
@@ -44,7 +44,7 @@ class Display_Handler():
         draw = ImageDraw.Draw(image)
 
         font = ImageFont.load_default()
-        text = f"{self.status.variable}\nPM25: {self.PM25.variable}\nMode: {self.mode.variable}"
+        text = f"{self.status.variable}\nPM25: {self.pm25.variable}\nMode: {self.mode.variable}"
         draw.text((0.0,0.0),text,font=font, fill=255, spacing=0)
 
         self.oled.image(image)

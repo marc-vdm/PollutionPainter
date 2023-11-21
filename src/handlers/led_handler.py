@@ -7,7 +7,7 @@ import threading
 import time
 from typing import Tuple, Union
 
-from ..misc import State
+from misc import State
 import modes.led_mode
 import modes.default
 
